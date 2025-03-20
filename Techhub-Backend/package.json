@@ -1,0 +1,32 @@
+{
+  "name": "techhub-backend",
+  "version": "1.0.0",
+  "description": "techhub backend / apis",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "author": "Haider",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.7.8",
+    "bcrypt": "^5.1.0",
+    "cloudinary": "^1.40.0",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "datauri": "^4.1.0",
+    "dotenv": "^16.4.7",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.1",
+    "mongoose": "^7.4.1",
+    "multer": "^1.4.5-lts.1",
+    "node-cron": "^3.0.2",
+    "nodemailer": "^6.9.4",
+    "nodemon": "^3.1.9",
+    "razorpay": "^2.9.1",
+    "stripe": "^17.2.1",
+    "validator": "^13.9.0"
+  }
+}

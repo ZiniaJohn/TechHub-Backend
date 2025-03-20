@@ -1,0 +1,48 @@
+
+import app from "./app.js";
+import { config } from "dotenv";
+import { connectDB } from "./config/connectDb.js";
+import cloudinary from "cloudinary";
+import Stripe from "stripe";
+
+// Uncaught Rejections
+process.on("uncaughtException", (error) => {
+  console.log(`Shutting down the server due to uncaught error`);
+  console.log(`Error: ${error.message}`);
+  process.exit(1);
+});
+
+// Dotenv Configuration
+config({
+  path: "./config/config.env",
+});
+
+// Database connection
+connectDB();
+
+// Stripe configuration
+console.log("stripe key", process.env.STRIPE_SECRET_KEY);
+export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+
+// Cloudinary configuration
+cloudinary.v2.config({
+  cloud_name: process.env.CLOUDINARY_CLIENT_NAME,
+  api_key: process.env.CLOUDINARY_CLIENT_API,
+  api_secret: process.env.CLOUDINARY_CLIENT_SECRET,
+});
+
+const PORT = process.env.PORT || 8000;
+const server = app.listen(PORT, () => {
+  console.log(`Server is running on PORT: ${PORT}`);
+});
+
+server.timeout = 300000;
+
+// Unhandled Promise Rejections
+process.on("unhandledRejection", (error) => {
+  console.log(`Error: ${error.message}`);
+  console.log(`Shutting down the server due to Unhandled Promise Rejection`);
+  server.close(() => {
+    process.exit(1);
+  });
+});
