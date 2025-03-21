@@ -4,14 +4,13 @@ import { connectDB } from "./config/connectDb.js";
 import cloudinary from "cloudinary";
 import Stripe from "stripe";
 
-// Handle Uncaught Exceptions
+// Uncaught Exception Handling
 process.on("uncaughtException", (error) => {
-  console.log(`Shutting down the server due to uncaught exception`);
-  console.log(`Error: ${error.message}`);
+  console.error(`Uncaught Exception: ${error.message}`);
   process.exit(1);
 });
 
-// Dotenv Configuration
+// Load environment variables
 config({
   path: "./config/config.env",
 });
@@ -20,7 +19,6 @@ config({
 connectDB();
 
 // Stripe configuration
-console.log("stripe key", process.env.STRIPE_SECRET_KEY);
 export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 // Cloudinary configuration
@@ -31,20 +29,20 @@ cloudinary.v2.config({
 });
 
 const PORT = process.env.PORT || 8000;
-const server = app.listen(PORT, () => {
-  console.log(`Server is running on PORT: ${PORT}`);
-});
 
-server.timeout = 300000;
+let server;
+if (!server) {
+  server = app.listen(PORT, () => {
+    console.log(`✅ Server is running on PORT: ${PORT}`);
+  });
 
-// Handle Unhandled Promise Rejections
+  server.timeout = 300000;
+}
+
+// Unhandled Promise Rejections
 process.on("unhandledRejection", (error) => {
-  console.log(`Error: ${error.message}`);
-  console.log(`Shutting down the server due to Unhandled Promise Rejection`);
+  console.error(`Unhandled Promise Rejection: ${error.message}`);
   server.close(() => {
     process.exit(1);
   });
 });
-
-// Export the server for Vercel
-export default server;
