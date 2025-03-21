@@ -1,13 +1,12 @@
-
 import app from "./app.js";
 import { config } from "dotenv";
 import { connectDB } from "./config/connectDb.js";
 import cloudinary from "cloudinary";
 import Stripe from "stripe";
 
-// Uncaught Rejections
+// Handle Uncaught Exceptions
 process.on("uncaughtException", (error) => {
-  console.log(`Shutting down the server due to uncaught error`);
+  console.log(`Shutting down the server due to uncaught exception`);
   console.log(`Error: ${error.message}`);
   process.exit(1);
 });
@@ -38,7 +37,7 @@ const server = app.listen(PORT, () => {
 
 server.timeout = 300000;
 
-// Unhandled Promise Rejections
+// Handle Unhandled Promise Rejections
 process.on("unhandledRejection", (error) => {
   console.log(`Error: ${error.message}`);
   console.log(`Shutting down the server due to Unhandled Promise Rejection`);
@@ -46,3 +45,6 @@ process.on("unhandledRejection", (error) => {
     process.exit(1);
   });
 });
+
+// Export the server for Vercel
+export default server;
