@@ -2,7 +2,7 @@ import { Cart } from "../models/Cart.js";
 import { Course } from "../models/Course.js";
 import ErrorHandler from "../utils/errorHandler.js";
 import { catchAsyncErrors } from "../middlewares/catchAsyncErrors.js";
-
+//hey this is add to the card
 // Add To the Cart
 export const addToCart = catchAsyncErrors(async (req, res, next) => {
   const { courseId } = req.body;
